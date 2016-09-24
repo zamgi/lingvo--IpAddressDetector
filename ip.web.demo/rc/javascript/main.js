@@ -51,7 +51,7 @@ $(document).ready(function () {
                         $('#resultCount').text('found IP(v4) addresses: ' + responce.ips.length);
                     } else {
                         processing_end();
-                        $('#processResult').html('<div style="text-align: center; padding: 15px;"><b>IP(v4) адресов</b> в тексте не найденно</div>');
+                        $('#processResult').html('<div style="text-align: center; padding: 15px;"><b>IP(v4) addresses</b> not found in the text</div>');
                     }
 
                     //---$('#text').html( text );
