@@ -89,9 +89,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Ude, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\[lib]\Ude.dll</HintPath>
+    <Reference Include="Ude">
+      <HintPath>..\[lib]\Ude.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
