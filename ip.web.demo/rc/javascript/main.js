@@ -79,7 +79,7 @@ $(document).ready(function () {
         }
 
         if (text.length > MAX_INPUTTEXT_LENGTH) {
-            if (!confirm('Превышен рекомендуемый лимит ' + MAX_INPUTTEXT_LENGTH + ' символов (на ' + (text.length - MAX_INPUTTEXT_LENGTH) + ' символов).\r\nТекст будет обрезан, продолжить?')) {
+            if (!confirm('Exceeded the recommended limit ' + MAX_INPUTTEXT_LENGTH + ' characters (on the ' + (text.length - MAX_INPUTTEXT_LENGTH) + ' characters).\r\nText will be truncated, continue?')) {
                 return (null);
             }
             text = text.substr(0, MAX_INPUTTEXT_LENGTH);
@@ -151,10 +151,8 @@ $(document).ready(function () {
                         $('#resultCount').text('found IP (v4) addresses: ' + responce.ips.length);
                     } else {
                         processing_end();
-                        $('#processResult').show().html('<div style="text-align: center; padding: 15px;"><b>IP(v4) адресов</b> в тексте не найденно</div>');
+                        $('#processResult').show().html('<div style="text-align: center; padding: 15px;"><b>IP (v4) addresses </ b> in the text not found</div>');
                     }
-
-                    //---$('#text').html( text );
                 }
             },
             error: function () {
@@ -167,7 +165,7 @@ $(document).ready(function () {
 
     function processing_start(){
         $('#text').addClass('no-change').attr('readonly', 'readonly').attr('disabled', 'disabled');
-        $('.result-info').show().removeClass('error').html('<div style="text-align: center">Идет обработка...</div>');
+        $('.result-info').show().removeClass('error').html('<div style="text-align: center">Processing...</div>');
         $('#processButton').addClass('disabled');
         $('#processResult, #resultCount').empty();
         $('#processResult').hide();
