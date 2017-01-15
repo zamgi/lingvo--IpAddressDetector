@@ -61,14 +61,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="description.html" />
+    <Content Include="rc\css\description.css" />
+    <Content Include="rc\css\ip.css" />
     <Content Include="rc\css\style.css" />
     <Content Include="rc\images\bg-btn.gif" />
     <Content Include="rc\images\bg-h2.gif" />
     <Content Include="rc\images\bg_body.gif" />
     <Content Include="rc\images\bg_html.png" />
     <Content Include="rc\images\bg_html_rl.png" />
-    <Content Include="rc\images\btn_bg.gif" />
-    <Content Include="rc\images\top_menu_bg.gif" />
     <Content Include="rc\javascript\jquery-1.9.1.js" />
     <Content Include="rc\javascript\main.js" />
     <Content Include="index.html" />
@@ -81,13 +82,7 @@
     <Compile Include="RESTProcessHandler.ashx.cs">
       <DependentUpon>RESTProcessHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="LoadTextHandler.ashx.cs">
-      <DependentUpon>LoadTextHandler.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="LoadTextHandler.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="RESTProcessHandler.ashx" />

@@ -101,9 +101,6 @@ namespace lingvo.core
 
         public void ProcessRequest( HttpContext context )
         {
-            context.Response.ContentType = "application/json";
-            //---context.Response.Headers.Add( "Access-Control-Allow-Origin", "*" );
-
             try
             {
                 var text = context.Request[ "text" ];
@@ -114,8 +111,6 @@ namespace lingvo.core
                 var ips = factory.Run( text );
 
                 SendJsonResponse( context, ips );
-
-                LoadTextHandler.SaveNoThrow( context, text );
             }
             catch ( Exception ex )
             {
@@ -123,16 +118,19 @@ namespace lingvo.core
             }
         }
 
-        private void SendJsonResponse( HttpContext context, ip_t[] ips )
+        private static void SendJsonResponse( HttpContext context, ip_t[] ips )
         {
             SendJsonResponse( context, new result( ips ) );
         }
-        private void SendJsonResponse( HttpContext context, Exception ex )
+        private static void SendJsonResponse( HttpContext context, Exception ex )
         {
             SendJsonResponse( context, new result( ex ) );
         }
-        private void SendJsonResponse( HttpContext context, result result )
+        private static void SendJsonResponse( HttpContext context, result result )
         {
+            context.Response.ContentType = "application/json";
+            //---context.Response.Headers.Add( "Access-Control-Allow-Origin", "*" );
+
             var json = JsonConvert.SerializeObject( result );
             context.Response.Write( json );
         }
