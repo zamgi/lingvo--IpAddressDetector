@@ -128,9 +128,9 @@
   <PropertyGroup>
     <PostBuildEvent>del "$(ProjectDir)$(OutDir)*.pdb" /Q
 rd "$(ProjectDir)\obj" /S/Q
-rd "..\..\IpAddressDetector\bin" /S/Q
-rd "..\..\IpAddressDetector\obj" /S/Q
-rd "..\..\IpAddressDetector.Console\bin" /S/Q
-rd "..\..\IpAddressDetector.Console\obj" /S/Q</PostBuildEvent>
+rd "..\..\IpAddressDetector\bin" /S/Q &gt; nul
+rd "..\..\IpAddressDetector\obj" /S/Q &gt; nul
+rd "..\..\IpAddressDetector.Console\bin" /S/Q &gt; nul
+rd "..\..\IpAddressDetector.Console\obj" /S/Q &gt; nul</PostBuildEvent>
   </PropertyGroup>
 </Project>
