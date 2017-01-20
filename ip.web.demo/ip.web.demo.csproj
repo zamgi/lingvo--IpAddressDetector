@@ -97,6 +97,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -128,9 +131,9 @@
   <PropertyGroup>
     <PostBuildEvent>del "$(ProjectDir)$(OutDir)*.pdb" /Q
 rd "$(ProjectDir)\obj" /S/Q
-rd "..\..\IpAddressDetector\bin" /S/Q &gt; nul
-rd "..\..\IpAddressDetector\obj" /S/Q &gt; nul
-rd "..\..\IpAddressDetector.Console\bin" /S/Q &gt; nul
-rd "..\..\IpAddressDetector.Console\obj" /S/Q &gt; nul</PostBuildEvent>
+rd "..\..\IpAddressDetector\bin" /S/Q &gt;nul 2&gt;&amp;1
+rd "..\..\IpAddressDetector\obj" /S/Q &gt;nul 2&gt;&amp;1 
+rd "..\..\IpAddressDetector.Console\bin" /S/Q &gt;nul 2&gt;&amp;1
+rd "..\..\IpAddressDetector.Console\obj" /S/Q &gt;nul 2&gt;&amp;1</PostBuildEvent>
   </PropertyGroup>
 </Project>
