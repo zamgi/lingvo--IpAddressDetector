@@ -1,5 +1,6 @@
 del "*.suo" /Q
 del "ip.web.demo\bin\*.pdb" /Q
+del "ip.web.demo\*.csproj.user" /Q
 rd "ip.web.demo\obj" /S/Q
 rd "IpAddressDetector\bin" /S/Q
 rd "IpAddressDetector\obj" /S/Q
