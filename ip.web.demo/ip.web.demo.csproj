@@ -129,11 +129,11 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>del "$(ProjectDir)$(OutDir)*.pdb" /Q
-rd "$(ProjectDir)\obj" /S/Q
-rd "..\..\IpAddressDetector\bin" /S/Q &gt;nul 2&gt;&amp;1
-rd "..\..\IpAddressDetector\obj" /S/Q &gt;nul 2&gt;&amp;1 
-rd "..\..\IpAddressDetector.Console\bin" /S/Q &gt;nul 2&gt;&amp;1
-rd "..\..\IpAddressDetector.Console\obj" /S/Q &gt;nul 2&gt;&amp;1</PostBuildEvent>
+    <PostBuildEvent>del "$(ProjectDir)$(OutDir)*.pdb" /Q 2&gt; nul
+rd "$(ProjectDir)\obj" /S/Q 2&gt; nul
+rd "..\..\IpAddressDetector\bin" /S/Q 2&gt; nul
+rd "..\..\IpAddressDetector\obj" /S/Q 2&gt; nul
+rd "..\..\IpAddressDetector.Console\bin" /S/Q 2&gt; nul
+rd "..\..\IpAddressDetector.Console\obj" /S/Q 2&gt; nul</PostBuildEvent>
   </PropertyGroup>
 </Project>
