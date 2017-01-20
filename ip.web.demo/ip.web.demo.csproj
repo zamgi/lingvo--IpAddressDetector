@@ -125,4 +125,12 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>del "$(ProjectDir)$(OutDir)*.pdb" /Q
+rd "$(ProjectDir)\obj" /S/Q
+rd "..\..\IpAddressDetector\bin" /S/Q
+rd "..\..\IpAddressDetector\obj" /S/Q
+rd "..\..\IpAddressDetector.Console\bin" /S/Q
+rd "..\..\IpAddressDetector.Console\obj" /S/Q</PostBuildEvent>
+  </PropertyGroup>
 </Project>
