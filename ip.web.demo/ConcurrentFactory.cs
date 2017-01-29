@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Threading;
 
@@ -32,12 +30,12 @@ namespace lingvo.core
 			var worker = default(IpAddressDetector);
 			try
 			{
-                worker = _Stack.Pop();
+                worker = Pop( _Stack );
                 if ( worker == null )
                 {
                     for ( var i = 0; ; i++ )
                     {
-                        worker = _Stack.Pop();
+                        worker = Pop( _Stack );
                         if ( worker != null )
                             break;
 
@@ -62,19 +60,13 @@ namespace lingvo.core
 
             throw (new InvalidOperationException( this.GetType().Name + ": nothing to return (fusking)" ));
 		}
-	}
 
-    /// <summary>
-    /// 
-    /// </summary>
-    internal static class ConcurrentFactoryExtensions
-    {
-        public static T Pop< T >( this ConcurrentStack< T > stack )
+        private static T Pop< T >( ConcurrentStack< T > stack )
         {
             var t = default(T);
             if ( stack.TryPop( out t ) )
                 return (t);
             return (default(T));
         }
-    }
+	}
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
-using System.Linq;
 using System.Web;
 
 using Newtonsoft.Json;
@@ -59,7 +56,7 @@ namespace lingvo.core
                 _Context = context;
             }
 
-            private ConcurrentFactory _ConcurrentFactory
+            /*private ConcurrentFactory _ConcurrentFactory
             {
                 get { return ((ConcurrentFactory) _Context.Cache[ "_ConcurrentFactory" ]); }
                 set
@@ -68,7 +65,9 @@ namespace lingvo.core
                     if ( value != null )
                         _Context.Cache[ "_ConcurrentFactory" ] = value;
                 }
-            }
+            }*/
+
+            private static ConcurrentFactory _ConcurrentFactory;
 
             public ConcurrentFactory GetConcurrentFactory()
             {
