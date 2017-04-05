@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 using CharTypeEnum = lingvo.core.IpAddressDetector.CharTypeEnum;
 
@@ -77,19 +75,25 @@ namespace lingvo.core
         }
 
         private List< ip_t > _Ips;
+        private Action< ip_t > _AddIpToListAction;
 
         public IpAddressDetector()
         {
-            _Ips = new List< ip_t >( 100 );
+            _Ips               = new List< ip_t >( 100 );
+            _AddIpToListAction = new Action< ip_t >( AddIpToList );
         }
 
         unsafe public List< ip_t > Run( string text )
         {
             _Ips.Clear();
 
-            Run( text, ip => _Ips.Add( ip ) );
+            Run( text, _AddIpToListAction );
 
             return (_Ips);
+        }
+        private void AddIpToList( ip_t ip )
+        {
+            _Ips.Add( ip );
         }
         unsafe public void Run( string text, Action< ip_t > detectedIpAction  )
         {
