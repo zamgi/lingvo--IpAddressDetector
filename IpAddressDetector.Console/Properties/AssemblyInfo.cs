@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "IpAddressDetector.Console" )]
+[assembly: AssemblyTitle("IpAddressDetector.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("xz")]
-[assembly: AssemblyProduct( "IpAddressDetector.Console" )]
-[assembly: AssemblyCopyright("Copyright © xz 2014")]
+[assembly: AssemblyCompany("zamgi")]
+[assembly: AssemblyProduct("IpAddressDetector.Console")]
+[assembly: AssemblyCopyright("Copyright © zamgi 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
