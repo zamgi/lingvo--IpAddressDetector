@@ -22,14 +22,14 @@ namespace lingvo.core
         private Config()
         {
             var value = ConfigurationManager.AppSettings[ "INPUT_FOLDERS" ];
-            if ( string.IsNullOrEmpty( value ) )
+            if ( value.IsNullOrEmpty() )
             {
                 throw (new ArgumentNullException( "INPUT_FOLDERS" ));
             }
             INPUT_FOLDERS = value
                             .Split( new[]{ ',', ';' }, StringSplitOptions.RemoveEmptyEntries )
                             .Select( _ => _.Trim() )
-                            .Where( _ => !string.IsNullOrEmpty( _ ) )
+                            .Where( _ => !_.IsNullOrEmpty() )
                             .ToArray();
             if ( !INPUT_FOLDERS.Any() )
             {
@@ -37,15 +37,15 @@ namespace lingvo.core
             }
 
             value = ConfigurationManager.AppSettings[ "FILE_SEARCH_MASK" ];
-            if ( string.IsNullOrEmpty( value ) )
+            if ( value.IsNullOrEmpty() )
             {
                 throw (new ArgumentNullException( "FILE_SEARCH_MASK" ));
             }
             FILE_SEARCH_MASK = value
-                            .Split( new[]{ ',', ';' }, StringSplitOptions.RemoveEmptyEntries )
-                            .Select( _ => _.Trim() )
-                            .Where( _ => !string.IsNullOrEmpty( _ ) )
-                            .ToArray();
+                                .Split( new[]{ ',', ';' }, StringSplitOptions.RemoveEmptyEntries )
+                                .Select( _ => _.Trim() )
+                                .Where( _ => !_.IsNullOrEmpty() )
+                                .ToArray();
             if ( !FILE_SEARCH_MASK.Any() )
             {
                 throw (new ArgumentNullException("FILE_SEARCH_MASK"));
@@ -73,25 +73,23 @@ namespace lingvo.core
     /// <summary>
     /// 
     /// </summary>
-    internal class Program
+    internal static class Program
     {
-        private static readonly Dictionary< string, string > CharsetNameDict = new Dictionary< string, string >();
-
+        private static readonly Dictionary< string, string > _CharsetNameDict = new Dictionary< string, string >();
         static Program()
         {
-            CharsetNameDict.Add( "x-mac-cyrillic", "windows-1251" );
-            CharsetNameDict.Add( "windows-1252"  , "windows-1251" );
+            _CharsetNameDict.Add( "x-mac-cyrillic", "windows-1251" );
+            _CharsetNameDict.Add( "windows-1252"  , "windows-1251" );
         }
 
         private static Encoding GetEncodingByCharsetName( string charsetName )
         {
-            if ( string.IsNullOrEmpty( charsetName ) )
+            if ( charsetName.IsNullOrEmpty() )
             {
                 return (Encoding.UTF8);
             }
 
-            var newCharsetName = default(string);
-            if ( CharsetNameDict.TryGetValue( charsetName, out newCharsetName ) )
+            if ( _CharsetNameDict.TryGetValue( charsetName, out var newCharsetName ) )
             {
                 return (Encoding.GetEncoding( newCharsetName ));
             }
@@ -119,7 +117,7 @@ namespace lingvo.core
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex.GetType().Name + ":'" + ex.Message + '\'' );
+                Debug.WriteLine( ex.GetType().Name + ": '" + ex.Message + '\'' );
             }
             return (null);
         }
@@ -133,7 +131,7 @@ namespace lingvo.core
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex.GetType().Name + ":'" + ex.Message + '\'' );
+                Debug.WriteLine( ex.GetType().Name + ": '" + ex.Message + '\'' );
                 return (Enumerable.Empty< string >());
             }
         }
@@ -214,7 +212,7 @@ namespace lingvo.core
 
                         foreach ( var ip in ips )
                         {
-                            var snippet = GetSnippet( ip, text, Config.Inst.SNIPPET_LENGTH );
+                            var snippet = GetSnippet( in ip, text, Config.Inst.SNIPPET_LENGTH );
 
                             Console.Write( '\t' );
                             Console.Write( snippet.before );
@@ -277,7 +275,7 @@ namespace lingvo.core
             public bool has_after_after;
         }
 
-        private static snippet_t GetSnippet( ip_t ip, string text, int snippetLength )
+        private static snippet_t GetSnippet( in ip_t ip, string text, int snippetLength )
         {
             var snippet = new snippet_t();
 
@@ -306,10 +304,7 @@ namespace lingvo.core
     /// </summary>
     internal static class Extensions
     {
-        public static bool IsNullOrEmpty( string value )
-        {
-            return (string.IsNullOrEmpty( value ));
-        }
+        public static bool IsNullOrEmpty( this string value ) => string.IsNullOrEmpty( value );
         public static IEnumerable< T > SafeWalk< T >( this IEnumerable< T > source )
         {
             using ( var enumerator = source.GetEnumerator() )
@@ -323,7 +318,7 @@ namespace lingvo.core
                     }
                     catch ( Exception ex )
                     {
-                        System.Diagnostics.Debug.WriteLine( ex.GetType().Name + ":'" + ex.Message + '\'' );
+                        Debug.WriteLine( ex.GetType().Name + ": '" + ex.Message + '\'' );
                         continue;
                     }
 

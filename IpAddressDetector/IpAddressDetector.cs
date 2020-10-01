@@ -35,8 +35,7 @@ namespace lingvo.core
         /// <summary>
         /// 
         /// </summary>
-        [Flags]
-        internal enum CharTypeEnum : byte
+        [Flags] internal enum CharTypeEnum : byte
         {
             __UNDEFINED__ = 0,
 
@@ -47,8 +46,7 @@ namespace lingvo.core
             Punctuation = (1 << 5),
         }
 
-        private static readonly CharTypeEnum* _CHARTYPE_MAP;
-
+        private static CharTypeEnum* _CHARTYPE_MAP;
         static IpAddressDetector()
         {
             var CHARTYPE_MAP = new byte[ char.MaxValue + 1 ];
@@ -74,7 +72,7 @@ namespace lingvo.core
             _CHARTYPE_MAP = (CharTypeEnum*) gcHandle.AddrOfPinnedObject();
         }
 
-        private List< ip_t > _Ips;
+        private List< ip_t >   _Ips;
         private Action< ip_t > _AddIpToListAction;
 
         public IpAddressDetector()
@@ -95,7 +93,7 @@ namespace lingvo.core
         {
             _Ips.Add( ip );
         }
-        unsafe public void Run( string text, Action< ip_t > detectedIpAction  )
+        unsafe public void Run( string text, Action< ip_t > detectedIpAction )
         {
             var ct      = CharTypeEnum.Whitespace; //for text who's start with ip-address
             var prev_ct = default(CharTypeEnum);
