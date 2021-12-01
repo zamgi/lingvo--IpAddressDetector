@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 namespace lingvo.core
 {
     /// <summary>
-    /// Summary description for RESTProcessHandler
+    /// Summary description for ProcessHandler
     /// </summary>
-    public sealed class RESTProcessHandler : IHttpHandler
+    public sealed class ProcessHandler : IHttpHandler
     {
         #region [.config.]
         private static readonly int CONCURRENT_FACTORY_INSTANCE_COUNT = int.Parse( ConfigurationManager.AppSettings[ "CONCURRENT_FACTORY_INSTANCE_COUNT" ] );
@@ -88,7 +88,7 @@ namespace lingvo.core
             }
         }
 
-        static RESTProcessHandler()
+        static ProcessHandler()
         {
             Environment.CurrentDirectory = HttpContext.Current.Server.MapPath( "~/" );
         }

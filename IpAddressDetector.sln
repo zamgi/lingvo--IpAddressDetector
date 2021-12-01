@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpAddressDetector", "IpAddressDetector\IpAddressDetector.csproj", "{B17C29AF-E052-413B-9149-4F49E5DA2571}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpAddressDetector.Console", "IpAddressDetector.Console\IpAddressDetector.Console.csproj", "{864D1953-A87E-4AC3-9106-9650D0553C2F}"
@@ -10,35 +12,26 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Debug|x86.ActiveCfg = Debug|x86
-		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Debug|x86.Build.0 = Debug|x86
 		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Release|x86.ActiveCfg = Release|x86
-		{B17C29AF-E052-413B-9149-4F49E5DA2571}.Release|x86.Build.0 = Release|x86
 		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Debug|x86.ActiveCfg = Debug|x86
-		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Debug|x86.Build.0 = Debug|x86
 		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Release|x86.ActiveCfg = Release|x86
-		{864D1953-A87E-4AC3-9106-9650D0553C2F}.Release|x86.Build.0 = Release|x86
 		{497B7E0F-D5DE-40A2-9C73-40A00A2EF941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{497B7E0F-D5DE-40A2-9C73-40A00A2EF941}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{497B7E0F-D5DE-40A2-9C73-40A00A2EF941}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{497B7E0F-D5DE-40A2-9C73-40A00A2EF941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{497B7E0F-D5DE-40A2-9C73-40A00A2EF941}.Release|Any CPU.Build.0 = Release|Any CPU
-		{497B7E0F-D5DE-40A2-9C73-40A00A2EF941}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29B4C6AD-B138-43F0-814C-FA1C0BC804BF}
 	EndGlobalSection
 EndGlobal
