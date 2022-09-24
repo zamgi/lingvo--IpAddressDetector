@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 using CharTypeEnum = lingvo.core.IpAddressDetector.CharTypeEnum;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.core
 {
@@ -14,16 +16,10 @@ namespace lingvo.core
         public int startIndex;
         public int length;
 
-        public string GetValue( string text )
-        {
-            return (text.Substring( startIndex, length ));
-        }
+        public string GetValue( string text ) => text.Substring( startIndex, length );
 #if DEBUG
         public string value;
-        public override string ToString()
-        {
-            return(value);
-        }
+        public override string ToString() => value;
 #endif
     }
 
@@ -89,10 +85,7 @@ namespace lingvo.core
 
             return (_Ips);
         }
-        private void AddIpToList( ip_t ip )
-        {
-            _Ips.Add( ip );
-        }
+        private void AddIpToList( ip_t ip ) => _Ips.Add( ip );
         unsafe public void Run( string text, Action< ip_t > detectedIpAction )
         {
             var ct      = CharTypeEnum.Whitespace; //for text who's start with ip-address
@@ -378,30 +371,15 @@ namespace lingvo.core
     /// </summary>
     internal static class Extensions
     {
-        public static bool IsDot   ( this CharTypeEnum ct )
-        {
-            return ((ct & CharTypeEnum.Dot) == CharTypeEnum.Dot);
-        }
-        public static bool IsNumber( this CharTypeEnum ct )
-        {
-            return ((ct & CharTypeEnum.Number) == CharTypeEnum.Number);
-        }
-        public static bool IsEOS   ( this CharTypeEnum ct )
-        {
-            return ((ct & CharTypeEnum.EOS) == CharTypeEnum.EOS);
-        }        
-        public static bool IsWhitespacePunctuation( this CharTypeEnum ct )
-        {
-            return ((ct & CharTypeEnum.Whitespace ) == CharTypeEnum.Whitespace ||
-                    (ct & CharTypeEnum.Punctuation) == CharTypeEnum.Punctuation
-                   );
-        }
-        public static bool IsWhitespacePunctuationEOS( this CharTypeEnum ct )
-        {
-            return ((ct & CharTypeEnum.Whitespace ) == CharTypeEnum.Whitespace ||
-                    (ct & CharTypeEnum.Punctuation) == CharTypeEnum.Punctuation ||
-                    (ct & CharTypeEnum.EOS        ) == CharTypeEnum.EOS
-                   );
-        }
+        [M(O.AggressiveInlining)] public static bool IsDot   ( this CharTypeEnum ct ) => ((ct & CharTypeEnum.Dot) == CharTypeEnum.Dot);
+        [M(O.AggressiveInlining)] public static bool IsNumber( this CharTypeEnum ct ) => ((ct & CharTypeEnum.Number) == CharTypeEnum.Number);
+        [M(O.AggressiveInlining)] public static bool IsEOS   ( this CharTypeEnum ct ) => ((ct & CharTypeEnum.EOS) == CharTypeEnum.EOS);
+        [M(O.AggressiveInlining)] public static bool IsWhitespacePunctuation( this CharTypeEnum ct ) => ((ct & CharTypeEnum.Whitespace ) == CharTypeEnum.Whitespace ||
+                                                                                                         (ct & CharTypeEnum.Punctuation) == CharTypeEnum.Punctuation
+                                                                                                        );
+        [M(O.AggressiveInlining)] public static bool IsWhitespacePunctuationEOS( this CharTypeEnum ct ) => ((ct & CharTypeEnum.Whitespace ) == CharTypeEnum.Whitespace ||
+                                                                                                            (ct & CharTypeEnum.Punctuation) == CharTypeEnum.Punctuation ||
+                                                                                                            (ct & CharTypeEnum.EOS        ) == CharTypeEnum.EOS
+                                                                                                           );
     }
 }

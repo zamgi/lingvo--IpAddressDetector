@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -7,15 +7,9 @@
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
-    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
-    <!--<RetainVMGarbageCollection>true</RetainVMGarbageCollection>-->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -25,14 +19,5 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\IpAddressDetector\IpAddressDetector.csproj" />
-    <ProjectReference Include="..\Ude\Ude.csproj" />
   </ItemGroup>
 </Project>

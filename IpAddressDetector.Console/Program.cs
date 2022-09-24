@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Web;
+
 using Ude;
 
 namespace lingvo.core
@@ -17,7 +18,7 @@ namespace lingvo.core
     /// </summary>
     internal sealed class Config
     {
-        public static readonly Config Inst = new Config();
+        public static Config Inst { get; } = new Config();
 
         private Config()
         {
@@ -41,33 +42,35 @@ namespace lingvo.core
             {
                 throw (new ArgumentNullException( "FILE_SEARCH_MASK" ));
             }
-            FILE_SEARCH_MASK = value
+            FILE_SEARCH_MASKS = value
                                 .Split( new[]{ ',', ';' }, StringSplitOptions.RemoveEmptyEntries )
                                 .Select( _ => _.Trim() )
                                 .Where( _ => !_.IsNullOrEmpty() )
                                 .ToArray();
-            if ( !FILE_SEARCH_MASK.Any() )
+            if ( !FILE_SEARCH_MASKS.Any() )
             {
                 throw (new ArgumentNullException("FILE_SEARCH_MASK"));
             }
-            FILE_SEARCH_MASK_HS = new HashSet< string >( from v in FILE_SEARCH_MASK select v.TrimStart( '*' ) );
+            FILE_SEARCH_MASKS_SET = new HashSet< string >( from v in FILE_SEARCH_MASKS select v.TrimStart( '*' ) );
 
-            if ( !int.TryParse( ConfigurationManager.AppSettings[ "MAX_FILE_SIZE_IN_BYTES" ], out MAX_FILE_SIZE_IN_BYTES ) )
+            if ( !int.TryParse( ConfigurationManager.AppSettings[ "MAX_FILE_SIZE_IN_BYTES" ], out var x ) )
             {
                 throw (new ArgumentNullException( "MAX_FILE_SIZE_IN_BYTES" ));
             }
+            MAX_FILE_SIZE_IN_BYTES = x;
 
-            if ( !int.TryParse( ConfigurationManager.AppSettings[ "SNIPPET_LENGTH" ], out SNIPPET_LENGTH ) )
+            if ( !int.TryParse( ConfigurationManager.AppSettings[ "SNIPPET_LENGTH" ], out x ) )
             {
                 throw (new ArgumentNullException( "SNIPPET_LENGTH" ));
             }
+            SNIPPET_LENGTH = x;
         }
 
-        public readonly int      MAX_FILE_SIZE_IN_BYTES; // = (1024 * 1024 * 512); // 500MB
-        public readonly string[] INPUT_FOLDERS;
-        public readonly string[] FILE_SEARCH_MASK;
-        public readonly HashSet< string > FILE_SEARCH_MASK_HS;
-        public readonly int      SNIPPET_LENGTH;
+        public int               MAX_FILE_SIZE_IN_BYTES { get; } // = (1024 * 1024 * 512); // 500MB
+        public string[]          INPUT_FOLDERS          { get; }
+        public string[]          FILE_SEARCH_MASKS      { get; }
+        public HashSet< string > FILE_SEARCH_MASKS_SET  { get; }
+        public int               SNIPPET_LENGTH         { get; }
     }
 
     /// <summary>
@@ -150,7 +153,6 @@ namespace lingvo.core
                 Console.WriteLine( ex );
                 Console.ResetColor();
             }
-
             Console.WriteLine( Environment.NewLine + "[.....finita fusking comedy.....]" );
             Console.ReadLine();
         }
@@ -163,7 +165,7 @@ namespace lingvo.core
 
             var tuples = from inputFolder in Config.Inst.INPUT_FOLDERS
                          from fullFileName in EnumerateAllFiles( inputFolder )
-                         where (Config.Inst.FILE_SEARCH_MASK_HS.Contains( Path.GetExtension( fullFileName ) ))
+                         where (Config.Inst.FILE_SEARCH_MASKS_SET.Contains( Path.GetExtension( fullFileName ) ))
                          let text = GetFileText( cdet, buffer, fullFileName )
                          where (!string.IsNullOrEmpty( text ))
                          select new { text = text, file = fullFileName };
@@ -190,7 +192,7 @@ namespace lingvo.core
                                "    </head>" +
                                "    <body>"
                                , string.Join( "', '", Config.Inst.INPUT_FOLDERS )
-                               , string.Join( "', '", Config.Inst.FILE_SEARCH_MASK ) );
+                               , string.Join( "', '", Config.Inst.FILE_SEARCH_MASKS ) );
 
                 foreach ( var t in tuples )
                 {
