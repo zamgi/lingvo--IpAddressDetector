@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ip.web.demo")]
+[assembly: AssemblyTitle("IpAddressDetector.WebService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("zamgi")]
-[assembly: AssemblyProduct("ip.web.demo")]
+[assembly: AssemblyProduct("IpAddressDetector.WebService")]
 [assembly: AssemblyCopyright("Copyright © zamgi 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
