@@ -1,7 +1,6 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Hosting;
@@ -33,8 +32,6 @@ namespace IpAddressDetector.WebService
             var logger                  = default(ILogger);
             try
             {
-                Encoding.RegisterProvider( CodePagesEncodingProvider.Instance );
-     
                 var concurrentFactory = new ConcurrentFactory( Config.CONCURRENT_FACTORY_INSTANCE_COUNT );
                 //---------------------------------------------------------------//
 

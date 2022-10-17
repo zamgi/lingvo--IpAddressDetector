@@ -1,17 +1,21 @@
-using System.Diagnostics;
-using System.Linq;
 using System.Text.Json.Serialization;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+#if DEBUG
+using System.Diagnostics;
+using System.Linq;
+
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting.WindowsServices;
+#endif
 
 namespace IpAddressDetector.WebService
 {
@@ -20,10 +24,7 @@ namespace IpAddressDetector.WebService
     /// </summary>
     internal sealed class Startup
     {
-        //private IConfiguration _Configuration;
-        //public Startup( IConfiguration configuration ) => _Configuration = configuration;
-
-        public void ConfigureServices( IServiceCollection services )
+        public static void ConfigureServices( IServiceCollection services )
         {
             services.AddControllers().AddJsonOptions( options =>
             {
@@ -31,11 +32,8 @@ namespace IpAddressDetector.WebService
                 options.JsonSerializerOptions.Converters.Add( new JsonStringEnumConverter() );
             });
 
-            //For application running on IIS:
             services.Configure< IISServerOptions >( opts => opts.MaxRequestBodySize = int.MaxValue );
-            //For application running on Kestrel:
             services.Configure< KestrelServerOptions >( opts => opts.Limits.MaxRequestBodySize = int.MaxValue );
-            //Form's MultipartBodyLengthLimit
             services.Configure< FormOptions >( opts =>
             {
                 opts.ValueLengthLimit            = int.MaxValue;
@@ -44,8 +42,7 @@ namespace IpAddressDetector.WebService
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure( IApplicationBuilder app, IWebHostEnvironment env )
+        public static void Configure( IApplicationBuilder app, IWebHostEnvironment env )
         {
             if ( env.IsDevelopment() )
             {
@@ -60,10 +57,12 @@ namespace IpAddressDetector.WebService
             app.UseAuthorization();
 
             app.UseEndpoints( endpoints => endpoints.MapControllers() );
-            //-------------------------------------------------------------//
-            
-            OpenBrowserIfRunAsConsole( app );
+#if DEBUG
+            //-------------------------------------------------------------//            
+            OpenBrowserIfRunAsConsole( app ); 
+#endif
         }
+#if DEBUG
         private static void OpenBrowserIfRunAsConsole( IApplicationBuilder app )
         {
             #region [.open browser if run as console.]
@@ -93,5 +92,6 @@ namespace IpAddressDetector.WebService
             }
             #endregion
         }
+#endif
     }
 }
