@@ -24,8 +24,8 @@ namespace Ude.Core
         {
             checked
             {
-                int num = offset + len;
-                for ( int i = offset; i < num; i++ )
+                var n = offset + len;
+                for ( var i = offset; i < n; i++ )
                 {
                     switch ( _CodingSM.NextState( buf[ i ] ) )
                     {
@@ -56,12 +56,12 @@ namespace Ude.Core
                     }
                     break;
                 }
-                _LastChar[ 0 ] = buf[ num - 1 ];
+                _LastChar[ 0 ] = buf[ n - 1 ];
                 if ( _State == ProbingState.Detecting && _ContextAnalyser.GotEnoughData() && GetConfidence() > 0.95f )
                 {
                     _State = ProbingState.FoundIt;
                 }
-                return _State;
+                return (_State);
             }
         }
 
@@ -75,13 +75,9 @@ namespace Ude.Core
 
         public override float GetConfidence()
         {
-            float confidence = _ContextAnalyser.GetConfidence();
+            float confidence  = _ContextAnalyser.GetConfidence();
             float confidence2 = _DistributionAnalyser.GetConfidence();
-            if ( !(confidence > confidence2) )
-            {
-                return confidence2;
-            }
-            return confidence;
+            return (confidence < confidence2) ? confidence2 : confidence;
         }
     }
 }

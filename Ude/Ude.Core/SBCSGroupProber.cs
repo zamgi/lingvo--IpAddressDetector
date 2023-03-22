@@ -84,7 +84,7 @@ namespace Ude.Core
                     return 0.01f;
                 default:
                     {
-                        for ( int i = 0; i < 13; i = checked(i + 1) )
+                        for ( int i = 0; i < 13; i++ )
                         {
                             if ( _IsActive[ i ] )
                             {
@@ -105,7 +105,7 @@ namespace Ude.Core
         {
             float confidence = GetConfidence();
             Console.WriteLine( " SBCS Group Prober --------begin status" );
-            for ( int i = 0; i < 13; i = checked(i + 1) )
+            for ( int i = 0; i < 13; i++ )
             {
                 if ( !_IsActive[ i ] )
                 {

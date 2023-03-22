@@ -21,15 +21,15 @@ namespace Ude.Core
         private byte _LastOrder;
         private int _TotalSeqs;
         private int _TotalChar;
-        private int[] _SeqCounters = new int[ 4 ];
+        private int[] _SeqCounters = new int[ NUMBER_OF_SEQ_CAT ];
         private int _FreqChar;
         private CharsetProber _NameProber;
 
         public SingleByteCharSetProber( SequenceModel model ) : this( model, reversed: false, null ) { }
         public SingleByteCharSetProber( SequenceModel model, bool reversed, CharsetProber nameProber )
         {
-            _Model = model;
-            _Reversed = reversed;
+            _Model      = model;
+            _Reversed   = reversed;
             _NameProber = nameProber;
             Reset();
         }
@@ -38,86 +38,78 @@ namespace Ude.Core
         {
             checked
             {
-                int num = offset + len;
-                for ( int i = offset; i < num; i++ )
+                var num = offset + len;
+                for ( var i = offset; i < num; i++ )
                 {
                     byte order = _Model.GetOrder( buf[ i ] );
-                    if ( order < 250 )
+                    if ( order < SYMBOL_CAT_ORDER )
                     {
                         _TotalChar++;
                     }
-                    if ( order < 64 )
+                    if ( order < SAMPLE_SIZE )
                     {
                         _FreqChar++;
-                        if ( _LastOrder < 64 )
+                        if ( _LastOrder < SAMPLE_SIZE )
                         {
                             _TotalSeqs++;
                             if ( !_Reversed )
                             {
-                                _SeqCounters[ _Model.GetPrecedence( unchecked((int) _LastOrder) * 64 + unchecked((int) order) ) ]++;
+                                _SeqCounters[ _Model.GetPrecedence( unchecked((int) _LastOrder) * SAMPLE_SIZE + unchecked((int) order) ) ]++;
                             }
                             else
                             {
-                                _SeqCounters[ _Model.GetPrecedence( unchecked((int) order) * 64 + unchecked((int) _LastOrder) ) ]++;
+                                _SeqCounters[ _Model.GetPrecedence( unchecked((int) order) * SAMPLE_SIZE + unchecked((int) _LastOrder) ) ]++;
                             }
                         }
                     }
                     _LastOrder = order;
                 }
-                if ( _State == ProbingState.Detecting && _TotalSeqs > 1024 )
+                if ( _State == ProbingState.Detecting && _TotalSeqs > SB_ENOUGH_REL_THRESHOLD )
                 {
                     float confidence = GetConfidence();
-                    if ( confidence > 0.95f )
+                    if ( confidence > POSITIVE_SHORTCUT_THRESHOLD )
                     {
                         _State = ProbingState.FoundIt;
                     }
-                    else if ( confidence < 0.05f )
+                    else if ( confidence < NEGATIVE_SHORTCUT_THRESHOLD )
                     {
                         _State = ProbingState.NotMe;
                     }
                 }
-                return _State;
+                return (_State);
             }
         }
 
-        public override void DumpStatus() => Console.WriteLine( "  SBCS: {0} [{1}]", GetConfidence(), GetCharsetName() );
+        public override void DumpStatus() => Console.WriteLine( $"  SBCS: {GetConfidence()} [{GetCharsetName()}]" );
 
         public override float GetConfidence()
         {
-            float num = 0f;
             if ( _TotalSeqs > 0 )
             {
-                num = 1f * (float) _SeqCounters[ 3 ] / (float) _TotalSeqs / _Model.TypicalPositiveRatio;
-                num = num * (float) _FreqChar / (float) _TotalChar;
-                if ( num >= 1f )
+                var n = 1f * (float) _SeqCounters[ POSITIVE_CAT ] / (float) _TotalSeqs / _Model.TypicalPositiveRatio;
+                    n = n * (float) _FreqChar / (float) _TotalChar;
+                if ( n >= 1f )
                 {
-                    num = 0.99f;
+                    n = 0.99f;
                 }
-                return num;
+                return (n);
             }
-            return 0.01f;
+            return (0.01f);
         }
 
         public override void Reset()
         {
             _State = ProbingState.Detecting;
             _LastOrder = byte.MaxValue;
-            for ( int i = 0; i < 4; i = checked(i + 1) )
+            for ( var i = 0; i < NUMBER_OF_SEQ_CAT; i++ )
             {
                 _SeqCounters[ i ] = 0;
             }
             _TotalSeqs = 0;
             _TotalChar = 0;
-            _FreqChar = 0;
+            _FreqChar  = 0;
         }
 
-        public override string GetCharsetName()
-        {
-            if ( _NameProber != null )
-            {
-                return _NameProber.GetCharsetName();
-            }
-            return _Model.CharsetName;
-        }
+        public override string GetCharsetName() => _NameProber?.GetCharsetName() ?? _Model.CharsetName;
     }
 }

@@ -186,7 +186,7 @@ namespace Ude.Core
                 float num = 0f;
                 float num2 = 0f;
                 int num3 = 0;
-                for ( int i = 0; i < 3; i = checked(i + 1) )
+                for ( int i = 0; i < 3; i++ )
                 {
                     if ( _CharsetProbers[ i ] != null )
                     {
@@ -222,7 +222,7 @@ namespace Ude.Core
             {
                 _EscCharsetProber.Reset();
             }
-            for ( int i = 0; i < 3; i = checked(i + 1) )
+            for ( int i = 0; i < 3; i++ )
             {
                 if ( _CharsetProbers[ i ] != null )
                 {

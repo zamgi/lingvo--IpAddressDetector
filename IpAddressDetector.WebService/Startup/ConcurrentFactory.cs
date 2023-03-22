@@ -21,7 +21,7 @@ namespace IpAddressDetector.WebService
 
             _Semaphore = new Semaphore( instanceCount, instanceCount );
             _Stack = new ConcurrentStack< _IpAddressDetector_ >();
-			for ( int i = 0; i < instanceCount; i++ )
+			for ( var i = 0; i < instanceCount; i++ )
 			{
                 _Stack.Push( new _IpAddressDetector_() );
 			}
@@ -44,8 +44,7 @@ namespace IpAddressDetector.WebService
 
                         Thread.Sleep( 25 ); //SpinWait.SpinUntil(
 
-                        if ( 10000 <= i )
-                            throw (new InvalidOperationException( this.GetType().Name + ": no (fusking) worker item in queue" ));
+                        if ( 10_000 <= i ) throw (new InvalidOperationException( $"{this.GetType().Name}: no (fusking) worker item in queue" ));
                     }
                 }
 
@@ -61,7 +60,7 @@ namespace IpAddressDetector.WebService
 				_Semaphore.Release();
 			}
 
-            throw (new InvalidOperationException( this.GetType().Name + ": nothing to return (fusking)" ));
+            throw (new InvalidOperationException( $"{this.GetType().Name}: nothing to return (fusking)" ));
 		}
 
         private static T Pop< T >( ConcurrentStack< T > stack ) => stack.TryPop( out var t ) ? t : default;

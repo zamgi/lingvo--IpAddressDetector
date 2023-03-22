@@ -59,9 +59,9 @@ namespace Ude.Core
         1, 1, 3, 3
         };
 
-        private byte lastCharClass;
+        private byte _LastCharClass;
 
-        private int[] freqCounter = new int[ 4 ];
+        private int[] _FreqCounter = new int[ 4 ];
 
         public Latin1Prober() => Reset();
         public override string GetCharsetName() => "windows-1252";
@@ -69,31 +69,31 @@ namespace Ude.Core
         public override void Reset()
         {
             _State = ProbingState.Detecting;
-            lastCharClass = 1;
-            for ( int i = 0; i < 4; i = checked(i + 1) )
+            _LastCharClass = 1;
+            for ( int i = 0; i < 4; i++ )
             {
-                freqCounter[ i ] = 0;
+                _FreqCounter[ i ] = 0;
             }
         }
 
         public override ProbingState HandleData( byte[] buf, int offset, int len )
         {
-            byte[] array = FilterWithEnglishLetters( buf, offset, len );
+            var array = FilterWithEnglishLetters( buf, offset, len );
             checked
             {
                 for ( int i = 0; i < array.Length; i++ )
                 {
-                    byte b = Latin1_CharToClass[ array[ i ] ];
-                    byte b2 = Latin1ClassModel[ unchecked((int) lastCharClass) * 8 + unchecked((int) b) ];
-                    if ( b2 == 0 )
+                    byte b_1 = Latin1_CharToClass[ array[ i ] ];
+                    byte b_2 = Latin1ClassModel[ unchecked(_LastCharClass) * 8 + unchecked(b_1) ];
+                    if ( b_2 == 0 )
                     {
                         _State = ProbingState.NotMe;
                         break;
                     }
-                    freqCounter[ b2 ]++;
-                    lastCharClass = b;
+                    _FreqCounter[ b_2 ]++;
+                    _LastCharClass = b_1;
                 }
-                return _State;
+                return (_State);
             }
         }
 
@@ -104,31 +104,27 @@ namespace Ude.Core
                 return 0.01f;
             }
 
-            int num2 = 0;
+            var n = 0;
             checked
             {
-                for ( int i = 0; i < 4; i++ )
+                for ( var i = 0; i < 4; i++ )
                 {
-                    num2 += freqCounter[ i ];
+                    n += _FreqCounter[ i ];
                 }
-                float num;
-                if ( num2 <= 0 )
+                float x;
+                if ( n <= 0 )
                 {
-                    num = 0f;
+                    x = 0f;
                 }
                 else
                 {
-                    num = (float) freqCounter[ 3 ] * 1f / (float) num2;
-                    num -= (float) freqCounter[ 1 ] * 20f / (float) num2;
+                    x  = _FreqCounter[ 3 ] * 1f  / n;
+                    x -= _FreqCounter[ 1 ] * 20f / n;
                 }
-                if ( !(num < 0f) )
-                {
-                    return num * 0.5f;
-                }
-                return 0f;
+                return (0f <= x) ? (x * 0.5f) : 0f;
             }
         }
 
-        public override void DumpStatus() => Console.WriteLine( " Latin1Prober: {0} [{1}]", GetConfidence(), GetCharsetName() );
+        public override void DumpStatus() => Console.WriteLine( $" Latin1Prober: {GetConfidence()} [{GetCharsetName()}]" );
     }
 }

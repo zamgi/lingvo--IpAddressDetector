@@ -127,7 +127,7 @@ namespace Ude.Core
             {
                 return 0.01f;
             }
-            for ( int i = 0; i < 7; i = checked(i + 1) )
+            for ( int i = 0; i < 7; i++ )
             {
                 if ( _IsActive[ i ] )
                 {
@@ -145,7 +145,7 @@ namespace Ude.Core
         public override void DumpStatus()
         {
             GetConfidence();
-            for ( int i = 0; i < 7; i = checked(i + 1) )
+            for ( int i = 0; i < 7; i++ )
             {
                 if ( !_IsActive[ i ] )
                 {

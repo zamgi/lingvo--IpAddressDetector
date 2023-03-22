@@ -7,8 +7,8 @@ namespace Ude.Core
     {
         protected byte[] _CharToOrderMap;
         protected byte[] _PrecedenceMatrix;
-        protected float _TypicalPositiveRatio;
-        protected bool _KeepEnglishLetter;
+        protected float  _TypicalPositiveRatio;
+        protected bool   _KeepEnglishLetter;
         protected string _CharsetName;
 
         public SequenceModel( byte[] charToOrderMap, byte[] precedenceMatrix, float typicalPositiveRatio, bool keepEnglishLetter, string charsetName )

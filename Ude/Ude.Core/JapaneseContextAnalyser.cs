@@ -1005,7 +1005,7 @@ namespace Ude.Core
         public void Reset()
         {
             _TotalRel = 0;
-            for ( int i = 0; i < 6; i = checked(i + 1) )
+            for ( int i = 0; i < 6; i++ )
             {
                 _RelSample[ i ] = 0;
                 _NeedToSkipCharNum = 0;

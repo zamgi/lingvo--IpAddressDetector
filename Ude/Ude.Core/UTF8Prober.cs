@@ -28,8 +28,8 @@ namespace Ude.Core
         {
             checked
             {
-                int num2 = offset + len;
-                for ( int i = offset; i < num2; i++ )
+                var n = offset + len;
+                for ( var i = offset; i < n; i++ )
                 {
                     switch ( _CodingSM.NextState( buf[ i ] ) )
                     {
@@ -50,26 +50,26 @@ namespace Ude.Core
                     }
                     break;
                 }
-                if ( _State == ProbingState.Detecting && GetConfidence() > 0.95f )
+                if ( (_State == ProbingState.Detecting) && (GetConfidence() > 0.95f) )
                 {
                     _State = ProbingState.FoundIt;
                 }
-                return _State;
+                return (_State);
             }
         }
 
         public override float GetConfidence()
         {
-            float num = 0.99f;
+            var n = 0.99f;
             if ( _NumOfMBChar < 6 )
             {
-                for ( int i = 0; i < _NumOfMBChar; i = checked(i + 1) )
+                for ( var i = 0; i < _NumOfMBChar; i++ )
                 {
-                    num *= ONE_CHAR_PROB;
+                    n *= ONE_CHAR_PROB;
                 }
-                return 1f - num;
+                return (1f - n);
             }
-            return 0.99f;
+            return (0.99f);
         }
     }
 }

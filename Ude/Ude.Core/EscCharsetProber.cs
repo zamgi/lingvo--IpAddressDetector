@@ -26,7 +26,7 @@ namespace Ude.Core
         public override void Reset()
         {
             _State = ProbingState.Detecting;
-            for ( int i = 0; i < 4; i = checked(i + 1) )
+            for ( int i = 0; i < 4; i++ )
             {
                 _CodingSM[ i ].Reset();
             }
