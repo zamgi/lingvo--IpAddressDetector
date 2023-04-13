@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     var MAX_INPUTTEXT_LENGTH  = 100000,
         LOCALSTORAGE_TEXT_KEY = 'ip-text',
@@ -63,12 +62,8 @@ $(document).ready(function () {
 'Multicast: A multicast address is associated with a group of interested receivers. In IPv4, addresses 224.0.0.0 through 239.255.255.255 (the former Class D addresses) are designated as multicast addresses.[11] IPv6 uses the address block with the prefix ff00::/8 for multicast applications. In either case, the sender sends a single datagram from its unicast address to the multicast group address and the intermediary routers take care of making copies and sending them to all receivers that have joined the corresponding multicast group.';
 
     var textOnChange = function () {
-        var _len = $("#text").val().length; 
-        var len = _len.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        var $textLength = $("#textLength");
-        $textLength.html("length of text: " + len + " characters");
-        if (MAX_INPUTTEXT_LENGTH < _len) $textLength.addClass("max-inputtext-length");
-        else                             $textLength.removeClass("max-inputtext-length");
+        let len = $('#text').val().length, len_txt = len.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        $('#textLength').toggleClass('max-inputtext-length', MAX_INPUTTEXT_LENGTH < len).html('length of text: ' + len_txt + ' characters');
     };
     var getText = function ($text) {
         var text = trim_text($text.val().toString());
@@ -104,7 +99,7 @@ $(document).ready(function () {
     })();
     $('#resetText2Default').click(function () {
         $("#text").val('');
-        setTimeout(function () { $("#text").val(DEFAULT_TEXT).focus(); }, 100);
+        setTimeout(() => $("#text").val(DEFAULT_TEXT).focus(), 100);
     });
 
     $('#mainPageContent').on('click', '#processButton', function () {
@@ -182,11 +177,7 @@ $(document).ready(function () {
     };
     function trim_text(text) { return (text.replace(/(^\s+)|(\s+$)/g, "")); };
     function is_text_empty(text) { return (!trim_text(text)); };
-    String.prototype.insert = function (index, str) {
-        if (0 < index)
-            return (this.substring(0, index) + str + this.substring(index, this.length));
-        return (str + this);
-    };
+    String.prototype.insert = function (index, str) { return (0 < index) ? (this.substring(0, index) + str + this.substring(index, this.length)) : (str + this); };
     String.prototype.replaceAll = function (token, newToken, ignoreCase) {
         var str = this + "";
         var i = -1;
