@@ -128,8 +128,7 @@ namespace lingvo.core
         {
             try
             {
-                var seq = Directory.EnumerateDirectories( path ).SafeWalk()
-                                   .SelectMany( _path => EnumerateAllFiles( _path ) );
+                var seq = Directory.EnumerateDirectories( path ).SafeWalk().SelectMany( EnumerateAllFiles );
                 return (seq.Concat( Directory.EnumerateFiles( path, "*.*" )/*.SafeWalk()*/ ));
             }
             catch ( Exception ex )
@@ -311,7 +310,7 @@ namespace lingvo.core
         {
             using ( var enumerator = source.GetEnumerator() )
             {
-                for ( ; ; )
+                for (; ; )
                 {
                     try
                     {
@@ -320,7 +319,7 @@ namespace lingvo.core
                     }
                     catch ( Exception ex )
                     {
-                        Debug.WriteLine( ex.GetType().Name + ": '" + ex.Message + '\'' );
+                        Debug.WriteLine( $"{ex.GetType().Name}: '{ex.Message}'" );
                         continue;
                     }
 
